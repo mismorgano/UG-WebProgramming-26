@@ -16,13 +16,31 @@ public class VehiclesController : ControllerBase
         this.dbContext = dbContext;
     }
 
+    [HttpPost]
+    public async Task<ActionResult> CreateVehicle([FromBody] Vehicle vehicle)
+    {
+        await dbContext.Vehicles.AddAsync(vehicle);
+        var result = await dbContext.SaveChangesAsync();
+
+        if (result > 0)
+        {
+            return Ok();
+        }
+        return BadRequest();
+    }
+
     [HttpGet]
     public async Task<ActionResult<List<Vehicle>>> GetVehicles()
     {
         List<Vehicle> vehicles = new List<Vehicle>();
         vehicles = dbContext.Vehicles.Include(v => v.CarBrand).ToList();
 
-        return vehicles;
+        if(vehicles != null)
+        {
+            return Ok(vehicles);
+        }
+
+        return NoContent();
     }
 
     [HttpGet("{id}")]
@@ -30,6 +48,52 @@ public class VehiclesController : ControllerBase
     {
         Vehicle vehicle = new Vehicle();
         vehicle = dbContext.Vehicles.FirstOrDefault(v => v.Id == id)!;
-        return vehicle;
+        return Ok(vehicle);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteVehicle([FromRoute] int id)
+    {
+        Vehicle vehicle = new Vehicle();
+        vehicle = dbContext.Vehicles.FirstOrDefault(v => v.Id == id)!;
+
+        if (vehicle == null)
+        {
+            return NotFound();
+        }
+
+        dbContext.Vehicles.Remove(vehicle);
+        var result = dbContext.SaveChangesAsync();
+
+        if (result != null)
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateVehicle([FromRoute] int id, [FromBody] Vehicle updatedVehicle)
+    {
+        Vehicle vehicle = new Vehicle();
+        vehicle = dbContext.Vehicles.FirstOrDefault(v => v.Id == id)!;
+
+        if (vehicle == null)
+        {
+            return NotFound();
+        }
+
+        vehicle.Model = updatedVehicle.Model;
+        dbContext.Vehicles.Update(vehicle);
+
+        var result = dbContext.SaveChangesAsync();
+
+        if (result != null)
+        {
+            return Ok();
+        }
+
+        return BadRequest();
     }
 }
