@@ -1,0 +1,5 @@
+@for(vehicle of (getVehicles() | async); track vehicle.id) {
+<p>{{vehicle.model}} </p>
+<p>{{vehicle.year}} </p>
+
+}
