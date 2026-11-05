@@ -35,7 +35,7 @@ public class VehiclesController : ControllerBase
         List<Vehicle> vehicles = new List<Vehicle>();
         vehicles = dbContext.Vehicles.Include(v => v.CarBrand).ToList();
 
-        if(vehicles != null)
+        if (vehicles != null)
         {
             return Ok(vehicles);
         }
