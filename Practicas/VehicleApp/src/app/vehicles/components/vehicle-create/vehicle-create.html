@@ -1,0 +1,12 @@
+<form [formGroup]="carForm">
+  <label>Year</label>
+  <input type="text" formControlName="year" />
+  <label>Model</label>
+  <input type="text" formControlName="model" />
+  <label>Brand</label>
+  <select formControlName="brandId">
+    <option value="1">Nissan</option>
+    <option value="2">Toyota</option>
+    <option value="3">Honda</option>
+  </select>
+</form>
