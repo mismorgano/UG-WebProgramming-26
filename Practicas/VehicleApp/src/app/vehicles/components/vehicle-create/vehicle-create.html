@@ -5,8 +5,8 @@
   <input type="text" formControlName="model" />
   <label>Brand</label>
   <select formControlName="brandId">
-    <option value="1">Nissan</option>
-    <option value="2">Toyota</option>
-    <option value="3">Honda</option>
+    @for (brand of brands(); track brand.id) {
+         <option [ngValue]="brand.id">{{ brand.brand }}</option>
+       }
   </select>
 </form>
