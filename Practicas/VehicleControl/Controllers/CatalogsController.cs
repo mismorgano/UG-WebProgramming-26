@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VehicleControl.Models;
 
@@ -29,6 +30,7 @@ public class CatalogsController : ControllerBase
 
     }
 
+    [EnableCors("LocalHostOrigin")]
     [HttpGet]
     public async Task<ActionResult> GetBrands()
     {

@@ -2,6 +2,16 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// allowCors (to localhost)
+var localHostAllow = "LocalHostOrigin";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: localHostAllow, policy =>
+    {
+        policy.WithOrigins("http://localhost:4200");
+    });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -18,6 +28,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
