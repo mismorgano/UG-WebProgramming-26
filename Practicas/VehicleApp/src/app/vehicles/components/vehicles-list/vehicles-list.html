@@ -1,4 +1,5 @@
 @for (vehicle of vehicleList(); track vehicle.id) {
 <p>{{vehicle.model}}</p>
 <p>{{vehicle.year}}</p>
+<button (click)="deleteVehicle(vehicle.id)">Delete</button>
 }
