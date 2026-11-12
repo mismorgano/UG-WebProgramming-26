@@ -10,7 +10,7 @@ namespace VehicleControl.Models
         [Required]
         public string Brand { get; set; } = string.Empty;
 
-        [JsonRequired]
+        [JsonIgnore]
         public ICollection<Vehicle> Vehicles {get; set;} = new List<Vehicle>();
     }
 }
