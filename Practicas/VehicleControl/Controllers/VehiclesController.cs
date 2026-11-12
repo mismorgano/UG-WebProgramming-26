@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VehicleControl.Models;
+using System.Text.Json;
 
 namespace VehicleControl.Controllers;
 
@@ -11,15 +12,19 @@ namespace VehicleControl.Controllers;
 public class VehiclesController : ControllerBase
 {
     private readonly ApplicationDbContext dbContext;
+    private readonly ILogger<VehiclesController> _logger;
 
-    public VehiclesController(ApplicationDbContext dbContext)
+    public VehiclesController(ApplicationDbContext dbContext, ILogger<VehiclesController> logger)
     {
         this.dbContext = dbContext;
+        _logger = logger;
     }
+
 
     [HttpPost]
     public async Task<ActionResult> CreateVehicle([FromBody] Vehicle vehicle)
     {
+        _logger.LogInformation("Received vehicle: {Vehicle}", JsonSerializer.Serialize(vehicle));
         await dbContext.Vehicles.AddAsync(vehicle);
         var result = await dbContext.SaveChangesAsync();
 

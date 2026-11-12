@@ -22,7 +22,7 @@ export class VehicleCreate implements OnInit {
   newVehicle = signal<NewVehicle>({
     year: '',
     model: '',
-    brandId: 0,
+    carBrandId: 0,
   });
 
   private readonly urlCarBrands = 'https://localhost:7221/api/catalogs';
@@ -49,17 +49,27 @@ export class VehicleCreate implements OnInit {
   saveVehicle() {
     const formValues = this.carForm.getRawValue();
 
-    console.log(formValues.brandId);
+
     this.newVehicle.set({
       ...formValues,
-      brandId: formValues.brandId ? Number(formValues.brandId) : 0,
+      carBrandId: formValues.brandId ? Number(formValues.brandId) : 0,
     });
-    console.log('NewVehicle: ', this.newVehicle());
+
+    console.log(this.newVehicle());
+
+    this.http.post(this.urlSaveVehicle, this.newVehicle()).subscribe({
+      next: (response) => {
+        console.log('Vehicle saved successfully: ', response);
+      },
+      error: (error) => {
+        console.error('Error when saving vehicle: ', error);
+      }
+    })
   }
 }
 
 export interface NewVehicle {
   year: string | null;
   model: string | null;
-  brandId: number | null;
+  carBrandId: number | null;
 }
