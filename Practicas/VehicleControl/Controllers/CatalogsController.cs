@@ -5,6 +5,7 @@ using VehicleControl.Models;
 
 namespace VehicleControl.Controllers;
 
+[EnableCors("LocalHostOrigin")]
 [ApiController]
 [Route("api/[controller]")]
 public class CatalogsController : ControllerBase
@@ -31,7 +32,7 @@ public class CatalogsController : ControllerBase
 
     }
 
-    [EnableCors("LocalHostOrigin")]
+
     [HttpGet]
     public async Task<ActionResult> GetBrands()
     {
@@ -39,7 +40,7 @@ public class CatalogsController : ControllerBase
         var brands = await dbContext.CarBrands.ToArrayAsync();
 
 
-        // The firs time instead of just return NoContent we're gonna 
+        // The firs time instead of just return NoContent we're gonna
         // populate our Brand table with many Default Brands
 
         if (!brands.Any())
