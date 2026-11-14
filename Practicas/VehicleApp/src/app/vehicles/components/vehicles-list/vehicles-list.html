@@ -1,5 +1,10 @@
 @for (vehicle of vehicleList(); track vehicle.id) {
-<p>{{vehicle.model}}</p>
-<p>{{vehicle.year}}</p>
-<button (click)="deleteVehicle(vehicle.id)">Delete</button>
+  <p>{{vehicle.model}}</p>
+  <p>{{vehicle.year}}</p>
+  <button (click)="deleteVehicle(vehicle.id)">Delete</button>
+  <button (click)="editVehicle(vehicle.id)">Edit</button>
+}
+
+@if ( editComponent() ) {
+  <app-vehicle-edit [vehicleId]="vehicleIdList()"></app-vehicle-edit>
 }
