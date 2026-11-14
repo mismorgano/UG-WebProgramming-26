@@ -1,0 +1,13 @@
+<form [formGroup]="editCarForm">
+  <label>Year</label>
+  <input type="text" formControlName="year" />
+  <label>Model</label>
+  <input type="text" formControlName="model" />
+  <label>Brand</label>
+  <select formControlName="carBrandId">
+    @for (brand of brands(); track brand.id) {
+      <option [ngValue]="brand.id">{{ brand.brand }}</option>
+    }
+  </select>
+  <button type="button" (click)="editVehicle()">Save</button>
+</form>
